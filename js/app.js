@@ -21,6 +21,34 @@ $(document).ready(function (){
 
 	//
 	//$("select#color").html("");
+	
+
+		
+		$("#color option").each(function() {
+		//$("#color").change(function(){
+			
+			//alert(this.text + '' + this.value);
+			
+			 /* if( $("#color option:not(:selected)").val() === "cornflowerblue" || $("#color option:not(:selected)").val() === "darkslategrey"
+				 || $("#color option:not(:selected)").val() === "gold") {
+						
+					alert("js-puns!");
+					$("#color option").addClass("js-puns");
+			 } */
+			if ( $("#color option:not(:selected)").val() === "cornflowerblue") {
+					alert("love-js!");
+					//$("#color option").addClass("love-js");
+					 $(this).addClass('love-js');
+				 }
+			
+			/* if( $("#color option").val() === "cornflowerblue"){
+				$("#color option").addClass("js-puns");
+				alert("test");
+					
+			} */
+		
+		});
+	
 	$("#design").change(function(){
 		
 		if( $("#design option:selected").val() === "js puns"   ){
