@@ -6,7 +6,7 @@ alert("Hello");
 $(document).ready(function (){
 	//focus on Name field
 	$("#name").focus();
-
+//Job Role Section
 //Hide otherTitle Id unless the user selects an other job title
 	$("#otherTitle").hide();
 
@@ -19,50 +19,201 @@ $(document).ready(function (){
 		}
 	});
 
-	//
-	//$("select#color").html("");
-	
+//T-Shirt Info Section
+	function hideOption(number) {
+		$('#colors-js-puns select option').eq(number).hide();
+		
+		
+	}
 
+	function showOption(number) {
+		$('#colors-js-puns select option').eq(number).show();
+	
+	}
 		
-		$("#color option").each(function() {
-		//$("#color").change(function(){
-			
-			//alert(this.text + '' + this.value);
-			
-			 /* if( $("#color option:not(:selected)").val() === "cornflowerblue" || $("#color option:not(:selected)").val() === "darkslategrey"
-				 || $("#color option:not(:selected)").val() === "gold") {
-						
-					alert("js-puns!");
-					$("#color option").addClass("js-puns");
-			 } */
-			if ( $("#color option:not(:selected)").val() === "cornflowerblue") {
-					alert("love-js!");
-					//$("#color option").addClass("love-js");
-					 $(this).addClass('love-js');
-				 }
-			
-			/* if( $("#color option").val() === "cornflowerblue"){
-				$("#color option").addClass("js-puns");
-				alert("test");
-					
-			} */
-		
-		});
 	
 	$("#design").change(function(){
+
+	
+		 if( $("#design option:selected").val() === "js puns"   ){ 
+			
+			$('#colors-js-puns select option')[0].selected = true;
+			
+			hideOption(3);
+			hideOption(4);
+			hideOption(5);
 		
-		if( $("#design option:selected").val() === "js puns"   ){
-			$(".js-puns").show();
-			$(".love-js").hide();
-			
+			showOption(0);
+			showOption(1);
+			showOption(2);
 		}
-		else if( $("#design option:selected").val() === "heart js"   ){
+		
+		 else if( $("#design option:selected").val() === "heart js"   ){
+			 
+			$('#colors-js-puns select option')[3].selected = true;
 			
-			$(".love-js").show();
-			$(".js-puns").hide();
+			hideOption(0);
+			hideOption(1);
+			hideOption(2);
+		
+			showOption(3);
+			showOption(4);
+			showOption(5);
 			
-		}
+		} 
 	});
 	
+	//Register for Activities Section
+	//variable used to add up the cost of classes
 
+	/* var jsFrameworks = {
+		day : "Tuesday",
+		time : "9-12",
+		cost: 100
+	};
+	
+	var expressWorkshop = {
+		day : "Tuesday",
+		time : "9-12",
+		cost: 100
+	}; */
+	
+
+
+$('.activities').on('change', function() {
+	
+	let  $totalCost = 0;
+	
+	var activities = [
+
+		{
+			title : "Main Conference",
+			day : "",
+			time : "",
+			input : $("input[name='all']"),//if one of the inputs is checked, go through all the other inputs in the array to check for day and time conflicts
+			cost: 200
+		},
+		{
+			title : "JS Frameworks",
+			day : "Tuesday",
+			time : "0900-1200",
+			input : $("input[name='js-frameworks']"),
+			cost: 100
+		},
+		{
+			title : "JS Libraries",
+			day : "Tuesday",
+			time : "1300-1600",
+			input : $("input[name='js-libs']"),
+			cost: 100
+		},
+		
+		{
+			title : "Express Workshop",
+			day : "Tuesday",
+			time : "0900-1200",
+			input: $("input[name='express']"),
+			cost: 100
+		},
+		{
+			title : "Node JS",
+			day : "Tuesday",
+			time : "1300-1600",
+			input : $("input[name='node']"),
+			cost: 100
+		},
+		{
+			title : "Build Tools",
+			day : "Wednesday",
+			time : "0900-1200",
+			input : $("input[name='build-tools']"),
+			cost: 100
+		},
+		{
+			title : "Build Tools",
+			day : "Wednesday",
+			time : "0900-1200",
+			input : $("input[name='build-tools']"),
+			cost: 100
+		},
+		{
+			title : "npm Workshop",
+			day :  "Wednesday",
+			time : "1300-1600",
+			input :  $("input[name='npm']"),
+			cost: 100
+				
+		}
+	];
+
+	$.each(activities, function( key,value) {
+		console.log(value.title + value.day + value.time +value.input + value.cost);
+		/* if(value.input ===  $("input[name='build-tools']") ) {
+			alert("input baby");
+		} */
+		/* if(activities.day&&activities.time===activities.day&&activities.time){
+			alert("These are equal");
+		} */
+		/* if(value.title === "npm Workshop"){
+			alert("npm workshop");
+		} */
+		
+		/* if(value.day && value.time == value.day && value.time){
+			alert("These are equal!");
+			
+		}*/
+		/* if( ($(value.input).eq(1) ).is(':checked')){
+				alert("1 isChecked!");
+		}  */
+		if($(value.input).is(':checked')){
+				alert("1 isChecked!");
+		}
+		if( ($(activities).eq(1) ).is(':checked')){
+				alert("1 isChecked eq1!");
+		}
+		
+		/* if ($(value.input).is(':checked') ) {//if an input is checked and the day and time of another input does not conflict leave it checked and disable others with same day and time
+			
+			if ( ( this.value.day && this.value.time)  != ( ( $(value.day).is(':checked') ) && ( $(value.time).is(':checked')) ) ){
+						alert("1 isChecked conditional!");
+				
+			}
+			
+		} */
+		
+		
+		
+		
+	});
+		
+	
+		
+		/* for(var i = 0; i < activities.length; i++){
+			if (activities[i].time === "1300-1600") {
+				alert("time is 1300 - 1600");
+			}
+			
+		} */
+		
+		/* $.each(activities) {
+		//console.log(value.title + value.day + value.time + value.cost);
+		if(activities.input ===  $("input[name='build-tools']") ) ){
+			alert("input baby");
+		}
+	}
+	 */
+
+
+
+
+		/* if(activities[1].day === "Tuesday"){
+			alert("Tuesday baby!");
+			}
+			 if(activities[1].input === $("input[name='js-frameworks']")){
+				alert("Input!");
+			}
+			console.log(activities[1].title);
+			console.log(activities[1].input);*/
+
+		}); 
 });
