@@ -2,7 +2,7 @@
 Treehouse Techdegree:
 FSJS project 3 - Interactive Form
 ******************************************/
-alert("Hello");
+//alert("Hello");
 $(document).ready(function (){
 	//focus on Name field
 	$("#name").focus();
@@ -84,7 +84,7 @@ $('.activities').on('change', function() {
 	
 	let  $totalCost = 0;
 	
-	var activities = [
+	   var activities = [
 
 		{
 			title : "Main Conference",
@@ -140,14 +140,25 @@ $('.activities').on('change', function() {
 			title : "npm Workshop",
 			day :  "Wednesday",
 			time : "1300-1600",
-			input :  $("input[name='npm']"),
+			//input :  $("input[name='npm']"),
 			cost: 100
 				
 		}
-	];
+	];  
 
-	$.each(activities, function( key,value) {
-		console.log(value.title + value.day + value.time +value.input + value.cost);
+	//My goals for the "Activities Section" is as follows
+	
+	//1.loop through fieldset inputs with .activities class
+	//2. be able to compare the day and times of each activity as opposed to just disabling certain checkboxes when a specific checkbox
+	//with conflicting time is checked. This way the code will work even if activities are added to the form. 
+	
+	//$(".actitivies input[type=checkbox]").each(function() {
+	
+	 $.each(activities, function(key, value) { 
+	//$('.activities :input[name]').each(function (key, value){
+		//console.log(key)
+	
+		//console.log(value.title + value.day + value.time +value.input + value.cost);
 		/* if(value.input ===  $("input[name='build-tools']") ) {
 			alert("input baby");
 		} */
@@ -162,15 +173,57 @@ $('.activities').on('change', function() {
 			alert("These are equal!");
 			
 		}*/
-		/* if( ($(value.input).eq(1) ).is(':checked')){
-				alert("1 isChecked!");
-		}  */
-		if($(value.input).is(':checked')){
-				alert("1 isChecked!");
+		/*  if( ($(value.input).eq(1) ).is(':checked')){
+		
+				
+		}   */
+		/* console.log("From array of objects, input");
+		console.log(activities[key].input[0])
+		console.log(`with an index of ${key}, and with the text`);
+		console.log(activities[key].input[0].parentElement.textContent);
+		console.log(`is checked.`);
+		console.log("-----------------------------------");
+		*/
+		
+		
+		/* console.log(`From DOM, input`);
+		console.log($("input[type='checkbox']")[key]);
+		console.log(`with an index of ${key}, and with the text`);
+		console.log($("input[type='checkbox']")[key].parentElement.textContent);
+		console.log(`is checked.`);
+		 */
+		 
+		
+		
+		//console.log(value.input);
+		
+		
+		 if($(value.input).is(':checked')){
+		//if(this.checked){
+			console.log("From array of objects, input");
+			console.log(activities[key].input[0])
+			console.log(`with an index of ${key}, and with the text`);
+			console.log(activities[key].input[0].parentElement.textContent);
+			console.log(`is checked.`);
+			console.log("-----------------------------------");
+			console.log(`From DOM, input`);
+			console.log($("input[type='checkbox']")[key]);
+			console.log(`with an index of ${key}, and with the text`);
+			console.log($("input[type='checkbox']")[key].parentElement.textContent);
+			console.log(`is checked.`); 
+				
+				/* console.log(`From DOM, input`);
+				console.log($("input").attr('name'));
+				//console.log(`with an index of ${key}, and with the text`);
+				//console.log($("input[type='checkbox']")[key].parentElement.textContent);
+				console.log(`is checked.`);  */
+		
+				
+				//alert(" isChecked!");	
 		}
-		if( ($(activities).eq(1) ).is(':checked')){
+		/* if( ($(activities).eq(1) ).is(':checked')){
 				alert("1 isChecked eq1!");
-		}
+		}  */
 		
 		/* if ($(value.input).is(':checked') ) {//if an input is checked and the day and time of another input does not conflict leave it checked and disable others with same day and time
 			
