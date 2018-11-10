@@ -2,7 +2,7 @@
 Treehouse Techdegree:
 FSJS project 3 - Interactive Form
 ******************************************/
-//alert("Hello");
+alert("Hello");
 $(document).ready(function (){
 	//focus on Name field
 	$("#name").focus();
@@ -65,6 +65,117 @@ $(document).ready(function (){
 	
 	//Register for Activities Section
 	//variable used to add up the cost of classes
+	
+	//My goals for the "Activities Section" is as follows
+	
+	//1.loop through fieldset inputs with .activities class
+	//2. be able to compare the day and times of each activity as opposed to just disabling certain checkboxes when a specific checkbox
+	//with conflicting time is checked. This way the code will work even if activities are added to the form. 
+	
+
+		/* $(".activities input[type=checkbox]").each(function() {
+				console.log("the log for $this");
+				
+				console.log($(this) );
+				
+				console.log("The log for this");
+				
+				console.log(this);
+				//console.log("checkbox checked!");
+		 $(this).on('change', function(e){ 
+
+				if( $(this).is( ":checked") ){
+					console.log( $(e.target).parent().text() );
+					console.log("$this is checked");
+					console.log($(this) + "is selected");
+				}
+				if( ($(this).parent().text() )
+				
+				if ( (this).checked ){
+					console.log("this is checked")
+					console.log( ( (this) + "is selected") );
+				}
+				
+			});
+			
+		 });  */
+	
+	const getCheckboxText = function () {
+	
+	 $(".activities input[type=checkbox]").on('change', function(e){ 
+				
+				let checkboxText = ( $(e.target).parent().text() );
+	 
+	 
+				if( $(this).is( ":checked") ){
+					//console.log( $(e.target).parent().text() );
+					console.log("checkbox text inside the getCheckBoxText");
+					console.log(checkboxText);
+					console.log("$this is checked");
+					console.log($(this) + "is selected");
+					checkboxLoop(checkboxText);
+				}
+				
+/* 				if ( (this).checked ){
+					console.log("this is checked")
+					console.log( ( (this) + "is selected") );
+				} */
+		});
+	
+	}	
+		
+	const checkboxLoop = function (checkboxTextContent) {
+		
+		
+		$(".activities input[type=checkbox]").each(function() {
+				console.log("checkboxTextContent is");
+				console.log(checkboxTextContent);
+				
+				let checkboxTextCheck = ( $(".activities input[type=checkbox]").parent().text() );
+				console.log ("checkboxTextCheck is");
+				console.log(checkboxTextCheck);
+				
+				if (checkboxTextCheck === checkboxTextContent){
+					console.log(checkboxTextCheck + "is euqal to " + checkboxTextContent);
+				}
+				
+				
+				console.log("This is inside the loop");
+				
+		
+		});
+	}
+	
+	getCheckboxText();
+	
+	
+	
+	/* $(".activities input[type=checkbox]").each(function() {
+				console.log("the log for $this");
+				
+				console.log($(this) );
+				
+				console.log("The log for this");
+				
+				console.log(this);
+				//console.log("checkbox checked!");
+		 $(this).on('change', function(e){ 
+
+				if( $(this).is( ":checked") ){
+					console.log( $(e.target).parent().text() );
+					console.log("$this is checked");
+					console.log($(this) + "is selected");
+				}
+				//if( ($(this).parent().text() )
+				
+				if ( (this).checked ){
+					console.log("this is checked")
+					console.log( ( (this) + "is selected") );
+				}
+				
+			});
+			
+		 });  */
 
 	/* var jsFrameworks = {
 		day : "Tuesday",
@@ -80,11 +191,120 @@ $(document).ready(function (){
 	
 
 
-$('.activities').on('change', function() {
+//$('.activities').on('change', function() {
 	
-	let  $totalCost = 0;
+	let  totalCost = 0;
 	
-	   var activities = [
+	var jsFrameworks = $("input[name='js-frameworks'");
+	var jsLibraries = $("input[name='js-libs']");
+	var express = $("input[name='express']");
+	var nodeJS = $("input[name='node']");
+
+	//var disabled = $('<style> .activities label{color: grey; text-decoration: line-through</style>'});
+	//let disabled = $('<style>.disabled{color:grey;}</style>');
+	//let disabled = $(this).css("color": "grey");
+
+	/* let disabled = $('<style> .disabled{color:grey;}</style>'); */
+	
+  	// Add total cost of activities
+
+/* 	$('.activities').append('<div id="activitiesTotal"></div>');
+
+	var updateCost = function (cost) {
+		totalCost += cost;
+		document.getElementById("activitiesTotal").innerHTML = "Total: $" + totalCost;
+	};  
+
+	$("input[name='all']").on('change', function () {
+		if ($(this).is(":checked")) {
+			updateCost(200);
+		} else {
+			updateCost(-200);
+		}
+	});
+
+	jsFrameworks.on('change', function () {
+		if ($(this).is(":checked")) {
+			express.prop("disabled", true);
+			express.parent().addClass("disabled");
+			updateCost(100);
+		} else {
+			express.prop("disabled", false);
+			express.parent().removeClass("disabled");
+			updateCost(-100);
+		}
+	});
+
+	jsLibraries.on ('change', function () {
+		if ($(this).is(":checked")) {
+			nodeJS.prop("disabled", true);
+			nodeJS.parent().addClass("disabled");
+			updateCost(100);
+		} else {
+			nodeJS.prop("disabled", false);
+			nodeJS.parent().removeClass("disabled");
+			updateCost(-100);
+		}
+	});
+
+	express.on('change',function () {
+		if ($(this).is(":checked")) {
+			jsFrameworks.prop("disabled", true);
+			jsFrameworks.parent().addClass("disabled");
+			updateCost(100);
+		} else {
+			jsFrameworks.prop("disabled", false);
+			jsFrameworks.parent().removeClass("disabled");
+			updateCost(-100);
+		}
+	});
+
+	nodeJS.on('change',function () {
+		if ($(this).is(":checked")) {
+			jsLibraries.prop("disabled", true);
+			jsLibraries.parent().addClass("disabled");
+			updateCost(100);
+		} else {
+			jsLibraries.prop("disabled", false);
+			jsLibraries.parent().removeClass("disabled");
+			updateCost(-100);
+		}
+	});
+
+	$("input[name='build-tools']").on('change', function () {
+		if ($(this).is(":checked")) {
+			updateCost(100);
+		} else {
+			updateCost(-100);
+		}
+	});
+
+	$("input[name='npm']").on('change', function () {
+		if ($(this).prop("checked")) {
+			updateCost(100);
+		} else {
+			updateCost(-100);
+		}
+	});
+ */
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/*    var activities = [
 
 		{
 			title : "Main Conference",
@@ -140,21 +360,25 @@ $('.activities').on('change', function() {
 			title : "npm Workshop",
 			day :  "Wednesday",
 			time : "1300-1600",
-			//input :  $("input[name='npm']"),
+			input :  $("input[name='npm']"),
 			cost: 100
 				
 		}
-	];  
+	]; */  
+	
+	/* var mainConference = 	{
+			title : "Main Conference",
+			day : "",
+			time : "",
+			input : $("input[name='all']"),//if one of the inputs is checked, go through all the other inputs in the array to check for day and time conflicts
+			cost: 200
+		} */
 
-	//My goals for the "Activities Section" is as follows
 	
-	//1.loop through fieldset inputs with .activities class
-	//2. be able to compare the day and times of each activity as opposed to just disabling certain checkboxes when a specific checkbox
-	//with conflicting time is checked. This way the code will work even if activities are added to the form. 
 	
-	//$(".actitivies input[type=checkbox]").each(function() {
+
 	
-	 $.each(activities, function(key, value) { 
+	// $.each(activities, function(key, value) { 
 	//$('.activities :input[name]').each(function (key, value){
 		//console.log(key)
 	
@@ -198,7 +422,7 @@ $('.activities').on('change', function() {
 		//console.log(value.input);
 		
 		
-		 if($(value.input).is(':checked')){
+		/*  if($(value.input).is(':checked')){
 		//if(this.checked){
 			console.log("From array of objects, input");
 			console.log(activities[key].input[0])
@@ -211,7 +435,7 @@ $('.activities').on('change', function() {
 			console.log(`with an index of ${key}, and with the text`);
 			console.log($("input[type='checkbox']")[key].parentElement.textContent);
 			console.log(`is checked.`); 
-				
+				 */
 				/* console.log(`From DOM, input`);
 				console.log($("input").attr('name'));
 				//console.log(`with an index of ${key}, and with the text`);
@@ -220,7 +444,7 @@ $('.activities').on('change', function() {
 		
 				
 				//alert(" isChecked!");	
-		}
+		//}
 		/* if( ($(activities).eq(1) ).is(':checked')){
 				alert("1 isChecked eq1!");
 		}  */
@@ -237,7 +461,7 @@ $('.activities').on('change', function() {
 		
 		
 		
-	});
+//	});
 		
 	
 		
@@ -268,5 +492,5 @@ $('.activities').on('change', function() {
 			console.log(activities[1].title);
 			console.log(activities[1].input);*/
 
-		}); 
+		//}); 
 });

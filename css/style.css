@@ -100,7 +100,13 @@ input[type="checkbox"],
 input[type="radio"] {
 	display: inline-block;
 }
-
+/* .activities label{
+	color:red;
+} */
+ .disabled{
+	color:rgba(115,115,115, 0.8 );
+	text-decoration: line-through;
+} 
 button {
 	color: #fff;
 	padding: .55em 1.25em;
