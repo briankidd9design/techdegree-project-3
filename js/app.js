@@ -99,13 +99,20 @@ $(document).ready(function (){
 			});
 			
 		 });  */
+	/* */
 	
 	const getCheckboxText = function () {
 	
 	 $(".activities input[type=checkbox]").on('change', function(e){ 
 				
 				let checkboxText = ( $(e.target).parent().text() );
-	 
+				console.log("This is the checkbox text index of the $");
+			let dollarSign = (checkboxText.indexOf("$") );
+				console.log(dollarSign);
+			let activityCost = checkboxText.slice( (dollarSign+1), (dollarSign+4) )
+			console.log("Cost of checked activity");
+			console.log(activityCost);
+				
 	 
 				if( $(this).is( ":checked") ){
 					//console.log( $(e.target).parent().text() );
@@ -127,11 +134,22 @@ $(document).ready(function (){
 	const checkboxLoop = function (checkboxTextContent) {
 		
 		
-		$(".activities input[type=checkbox]").each(function() {
-				console.log("checkboxTextContent is");
-				console.log(checkboxTextContent);
+		$(".activities input[type=checkbox]").each(function(index, value) {
 				
-				let checkboxTextCheck = ( $(".activities input[type=checkbox]").parent().text() );
+				let checkboxTextCheck = $(value).parent().text();
+				console.log ("checkboxTextCheck is");
+				console.log(checkboxTextCheck);
+				
+				if ( $(this).is(":checked") && checkboxTextCheck === checkboxTextContent){
+					console.log(checkboxTextCheck + "is euqal to " + checkboxTextContent);
+				}
+				
+				
+			
+				/* console.log("checkboxTextContent is");
+				console.log(checkboxTextContent);
+			
+			let checkboxTextCheck = ( $(".activities input[type=checkbox]").parent().text() );
 				console.log ("checkboxTextCheck is");
 				console.log(checkboxTextCheck);
 				
@@ -140,7 +158,7 @@ $(document).ready(function (){
 				}
 				
 				
-				console.log("This is inside the loop");
+				console.log("This is inside the loop"); */
 				
 		
 		});
