@@ -2,7 +2,7 @@
 Treehouse Techdegree:
 FSJS project 3 - Interactive Form
 ******************************************/
-alert("Hello");
+//alert("Hello");
 $(document).ready(function (){
 	//focus on Name field
 	$("#name").focus();
@@ -105,14 +105,29 @@ $(document).ready(function (){
 	
 	 $(".activities input[type=checkbox]").on('change', function(e){ 
 				
-				let checkboxText = ( $(e.target).parent().text() );
-				console.log("This is the checkbox text index of the $");
+			let checkboxText = ( $(e.target).parent().text() );
+		
+			console.log("This is the checkbox text index of the $");
+			/*Activity Cost of any checked activity*/
 			let dollarSign = (checkboxText.indexOf("$") );
-				console.log(dollarSign);
-			let activityCost = checkboxText.slice( (dollarSign+1), (dollarSign+4) )
+			
+			console.log(dollarSign);
+			let activityCost = parseInt(checkboxText.slice( (dollarSign+1), (dollarSign+4) ) );
 			console.log("Cost of checked activity");
 			console.log(activityCost);
-				
+			
+			
+			
+			//let timeSearch = /\d[ampm]/g;
+			let timeSearch = /\b((?:1[0-2]|[1-9])[ap]m)-((?:1[0-2]|[1-9])[ap]m)/g
+			//let time = checkboxText[checkboxText.match(timeSearch)];
+			let time = checkboxText.match(timeSearch);
+		
+			
+			
+			
+			/*Activity Day of any Checked Activity*/
+			//let day = ;
 	 
 				if( $(this).is( ":checked") ){
 					//console.log( $(e.target).parent().text() );
@@ -120,7 +135,10 @@ $(document).ready(function (){
 					console.log(checkboxText);
 					console.log("$this is checked");
 					console.log($(this) + "is selected");
-					checkboxLoop(checkboxText);
+					console.log("Activity time of the CHECKED activity is");
+					console.log(time); 
+					
+					checkboxLoop(checkboxText, timeSearch, time);
 				}
 				
 /* 				if ( (this).checked ){
@@ -131,34 +149,46 @@ $(document).ready(function (){
 	
 	}	
 		
-	const checkboxLoop = function (checkboxTextContent) {
+	const checkboxLoop = function (checkboxTextContent, stringSearchTime, checkedEventTime ) {
 		
 		
 		$(".activities input[type=checkbox]").each(function(index, value) {
 				
+				console.log("checked event time is equal to");
+				console.log(checkedEventTime);
+				
+				
 				let checkboxTextCheck = $(value).parent().text();
+				let specificEventTime = checkboxTextCheck.match(stringSearchTime);
+				/* console.log("specific Event Time is");
+				console.log(specificEventTime); */
+				
+				/* let specificEventTime = $(value).allEventTimes;
+				
+				console.log("Specific event time is" + specificEventTime ); */
+				
+				
 				console.log ("checkboxTextCheck is");
 				console.log(checkboxTextCheck);
+				console.log("specific Event time is equal to");
+				console.log(specificEventTime);
 				
 				if ( $(this).is(":checked") && checkboxTextCheck === checkboxTextContent){
 					console.log(checkboxTextCheck + "is euqal to " + checkboxTextContent);
 				}
 				
 				
-			
-				/* console.log("checkboxTextContent is");
-				console.log(checkboxTextContent);
-			
-			let checkboxTextCheck = ( $(".activities input[type=checkbox]").parent().text() );
-				console.log ("checkboxTextCheck is");
-				console.log(checkboxTextCheck);
+				if (specificEventTime != null ) {
 				
-				if (checkboxTextCheck === checkboxTextContent){
-					console.log(checkboxTextCheck + "is euqal to " + checkboxTextContent);
+					if($(this).is(":checked") && JSON.stringify(checkedEventTime)===JSON.stringify(specificEventTime)){
+						alert("times are equal!");
+						console.log("These Event Times are equal");
+						console.log(JSON.stringify(checkedEventTime) + "is equal to" + JSON.stringify(specificEventTime) );
+					//	$(specificEventTime.child().input.attr('disabled', "") );
+						//$(spcificEvent )
+						
+					}
 				}
-				
-				
-				console.log("This is inside the loop"); */
 				
 		
 		});
