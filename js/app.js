@@ -71,177 +71,143 @@ $(document).ready(function (){
 	//1.loop through fieldset inputs with .activities class
 	//2. be able to compare the day and times of each activity as opposed to just disabling certain checkboxes when a specific checkbox
 	//with conflicting time is checked. This way the code will work even if activities are added to the form. 
-	
-
-		/* $(".activities input[type=checkbox]").each(function() {
-				console.log("the log for $this");
-				
-				console.log($(this) );
-				
-				console.log("The log for this");
-				
-				console.log(this);
-				//console.log("checkbox checked!");
-		 $(this).on('change', function(e){ 
-
-				if( $(this).is( ":checked") ){
-					console.log( $(e.target).parent().text() );
-					console.log("$this is checked");
-					console.log($(this) + "is selected");
-				}
-				if( ($(this).parent().text() )
-				
-				if ( (this).checked ){
-					console.log("this is checked")
-					console.log( ( (this) + "is selected") );
-				}
-				
-			});
-			
-		 });  */
-	/* */
-	
-	const getCheckboxText = function () {
-	
+	//var totalCost = 0;	
+	var totalCost = 0;//this is in the global scope. Is there a way to make it work in the function below?
 	 $(".activities input[type=checkbox]").on('change', function(e){ 
 				
-			let checkboxText = ( $(e.target).parent().text() );
-		
-			console.log("This is the checkbox text index of the $");
-			/*Activity Cost of any checked activity*/
-			let dollarSign = (checkboxText.indexOf("$") );
+			let inputLength = $('input[type="checkbox"]:checked').length;
+			console.log("input Length is");
+			console.log(inputLength);
 			
-			console.log(dollarSign);
+			let checkboxText = ( $(e.target).parent().text() );
+			
+			console.log("This is the checkbox text index of the $");
+			/*Activity Day*/
+			/*This function takes in the whole description of the activity and finds the day of the week*/
+			let getActivityDay = function(checkboxText){
+				
+				let daysOfWeek = ["Sunday","Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+				
+				for (let i = 0; i < daysOfWeek.length; i++){
+					
+					console.log (checkboxText);
+					
+				//	console.log(daysOfWeek[i]);
+					
+					if(checkboxText.includes(daysOfWeek[i])){
+						console.log("This is the Day of the week of the checked activity");
+						console.log(daysOfWeek[i]);
+						let dayOfWeekReturn = daysOfWeek[i];
+						return dayOfWeekReturn;	
+					}
+				
+				}
+			}
+			
+
+			
+			var activityDay = getActivityDay(checkboxText);
+			console.log("This is the retun of the activity day");
+			console.log(activityDay);
+			
+			
+			/*Activity Time*/
+			let timeSearch = /\b((?:1[0-2]|[1-9])[ap]m)-((?:1[0-2]|[1-9])[ap]m)/g;
+			let activityTime = checkboxText.match(timeSearch);
+			
+			/*Activity Cost*/
+			let dollarSign = (checkboxText.indexOf("$") );
+			//console.log(dollarSign);
 			let activityCost = parseInt(checkboxText.slice( (dollarSign+1), (dollarSign+4) ) );
 			console.log("Cost of checked activity");
 			console.log(activityCost);
 			
-			
-			
-			//let timeSearch = /\d[ampm]/g;
-			let timeSearch = /\b((?:1[0-2]|[1-9])[ap]m)-((?:1[0-2]|[1-9])[ap]m)/g
-			//let time = checkboxText[checkboxText.match(timeSearch)];
-			let time = checkboxText.match(timeSearch);
+	$('.activities').append('<div id="activitiesTotal"></div>');
+			var updateCost = function (activityCost) {
+				totalCost += activityCost;
+				document.getElementById("activitiesTotal").innerHTML = "Total: $" + totalCost;
+			};  
 		
-			
-			
-			
-			/*Activity Day of any Checked Activity*/
-			//let day = ;
-	 
-				if( $(this).is( ":checked") ){
+			if( $(this).is( ":checked") ){
+				updateCost(activityCost);
 					//console.log( $(e.target).parent().text() );
 					console.log("checkbox text inside the getCheckBoxText");
 					console.log(checkboxText);
 					console.log("$this is checked");
 					console.log($(this) + "is selected");
 					console.log("Activity time of the CHECKED activity is");
-					console.log(time); 
-					
-					checkboxLoop(checkboxText, timeSearch, time);
+					console.log(activityTime); 
 				}
-				
-/* 				if ( (this).checked ){
-					console.log("this is checked")
-					console.log( ( (this) + "is selected") );
-				} */
-		});
-	
-	}	
-		
-	const checkboxLoop = function (checkboxTextContent, stringSearchTime, checkedEventTime ) {
-		
-		
+				else{
+					updateCost(-activityCost)
+				}
+		/*looping over the acitivites */
 		$(".activities input[type=checkbox]").each(function(index, value) {
 				
+	
+			let checkboxTextCheck = $(value).parent().text();
+					//	let specificEventDay = checkboxTextCheck.slice ( (emDash + 2), (emDash+6) );
+			let specificEventTime = checkboxTextCheck.match(timeSearch)
+					
 				console.log("checked event time is equal to");
-				console.log(checkedEventTime);
-				
-				
-				let checkboxTextCheck = $(value).parent().text();
-				let specificEventTime = checkboxTextCheck.match(stringSearchTime);
-				/* console.log("specific Event Time is");
-				console.log(specificEventTime); */
-				
-				/* let specificEventTime = $(value).allEventTimes;
-				
-				console.log("Specific event time is" + specificEventTime ); */
-				
-				
-				console.log ("checkboxTextCheck is");
-				console.log(checkboxTextCheck);
-				console.log("specific Event time is equal to");
-				console.log(specificEventTime);
-				
-				if ( $(this).is(":checked") && checkboxTextCheck === checkboxTextContent){
-					console.log(checkboxTextCheck + "is euqal to " + checkboxTextContent);
-				}
-				
-				
-				if (specificEventTime != null ) {
-				
-					if($(this).is(":checked") && JSON.stringify(checkedEventTime)===JSON.stringify(specificEventTime)){
-						alert("times are equal!");
-						console.log("These Event Times are equal");
-						console.log(JSON.stringify(checkedEventTime) + "is equal to" + JSON.stringify(specificEventTime) );
-					//	$(specificEventTime.child().input.attr('disabled', "") );
-						//$(spcificEvent )
+				console.log(activityTime);
 						
-					}
-				}
-				
-		
-		});
+			let getActivityDays = function(checkboxTextCheck){
+					
+			let daysOfWeek = ["Sunday","Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+					
+			for (let i = 0; i < daysOfWeek.length; i++){
+						
+				console.log (checkboxTextCheck);
+						
+					//	console.log(daysOfWeek[i]);
+						
+				if(checkboxTextCheck.includes(daysOfWeek[i])){
+				console.log("The day of week for this activity is");
+				console.log(daysOfWeek[i]);
+				let dayOfWeekReturn = daysOfWeek[i];
+				return dayOfWeekReturn;	
+			}
+					
+		}
 	}
-	
-	getCheckboxText();
-	
-	
-	
-	/* $(".activities input[type=checkbox]").each(function() {
-				console.log("the log for $this");
+					
+					let activityDays = getActivityDays(checkboxTextCheck);
+					console.log(activityDays);
 				
-				console.log($(this) );
+					
+					
+					console.log ("checkboxTextCheck is");
+					console.log(checkboxTextCheck);
+					/* console.log ("Specific event day is equal to ");
+					console.log (specificEventDay); */
+					console.log("specific Event time is equal to");
+					console.log(specificEventTime);
+					
+					if ( $(this).is(":checked") && checkboxTextCheck === checkboxText){
+						console.log(checkboxText + "is euqal to " + checkboxText);
+					}
+					
+					
+					if (specificEventTime != null ) {
+					
+						if($(this).is(":checked") && JSON.stringify(activityTime)===JSON.stringify(specificEventTime)){
+							alert("times are equal!");
+							console.log("These Event Times are equal");
+							console.log(JSON.stringify(activityTime) + "is equal to" + JSON.stringify(specificEventTime) );
+						//	$(specificEventTime.child().input.attr('disabled', "") );
+							//$(spcificEvent )
+							
+						}
+					}
 				
-				console.log("The log for this");
 				
-				console.log(this);
-				//console.log("checkbox checked!");
-		 $(this).on('change', function(e){ 
-
-				if( $(this).is( ":checked") ){
-					console.log( $(e.target).parent().text() );
-					console.log("$this is checked");
-					console.log($(this) + "is selected");
-				}
-				//if( ($(this).parent().text() )
+				});
 				
-				if ( (this).checked ){
-					console.log("this is checked")
-					console.log( ( (this) + "is selected") );
-				}
-				
-			});
-			
-		 });  */
-
-	/* var jsFrameworks = {
-		day : "Tuesday",
-		time : "9-12",
-		cost: 100
-	};
+					
+	 });
 	
-	var expressWorkshop = {
-		day : "Tuesday",
-		time : "9-12",
-		cost: 100
-	}; */
-	
-
-
-//$('.activities').on('change', function() {
-	
-	let  totalCost = 0;
+	//let  totalCost = 0;
 	
 	var jsFrameworks = $("input[name='js-frameworks'");
 	var jsLibraries = $("input[name='js-libs']");
@@ -337,208 +303,5 @@ $(document).ready(function (){
  */
 
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	/*    var activities = [
 
-		{
-			title : "Main Conference",
-			day : "",
-			time : "",
-			input : $("input[name='all']"),//if one of the inputs is checked, go through all the other inputs in the array to check for day and time conflicts
-			cost: 200
-		},
-		{
-			title : "JS Frameworks",
-			day : "Tuesday",
-			time : "0900-1200",
-			input : $("input[name='js-frameworks']"),
-			cost: 100
-		},
-		{
-			title : "JS Libraries",
-			day : "Tuesday",
-			time : "1300-1600",
-			input : $("input[name='js-libs']"),
-			cost: 100
-		},
-		
-		{
-			title : "Express Workshop",
-			day : "Tuesday",
-			time : "0900-1200",
-			input: $("input[name='express']"),
-			cost: 100
-		},
-		{
-			title : "Node JS",
-			day : "Tuesday",
-			time : "1300-1600",
-			input : $("input[name='node']"),
-			cost: 100
-		},
-		{
-			title : "Build Tools",
-			day : "Wednesday",
-			time : "0900-1200",
-			input : $("input[name='build-tools']"),
-			cost: 100
-		},
-		{
-			title : "Build Tools",
-			day : "Wednesday",
-			time : "0900-1200",
-			input : $("input[name='build-tools']"),
-			cost: 100
-		},
-		{
-			title : "npm Workshop",
-			day :  "Wednesday",
-			time : "1300-1600",
-			input :  $("input[name='npm']"),
-			cost: 100
-				
-		}
-	]; */  
-	
-	/* var mainConference = 	{
-			title : "Main Conference",
-			day : "",
-			time : "",
-			input : $("input[name='all']"),//if one of the inputs is checked, go through all the other inputs in the array to check for day and time conflicts
-			cost: 200
-		} */
-
-	
-	
-
-	
-	// $.each(activities, function(key, value) { 
-	//$('.activities :input[name]').each(function (key, value){
-		//console.log(key)
-	
-		//console.log(value.title + value.day + value.time +value.input + value.cost);
-		/* if(value.input ===  $("input[name='build-tools']") ) {
-			alert("input baby");
-		} */
-		/* if(activities.day&&activities.time===activities.day&&activities.time){
-			alert("These are equal");
-		} */
-		/* if(value.title === "npm Workshop"){
-			alert("npm workshop");
-		} */
-		
-		/* if(value.day && value.time == value.day && value.time){
-			alert("These are equal!");
-			
-		}*/
-		/*  if( ($(value.input).eq(1) ).is(':checked')){
-		
-				
-		}   */
-		/* console.log("From array of objects, input");
-		console.log(activities[key].input[0])
-		console.log(`with an index of ${key}, and with the text`);
-		console.log(activities[key].input[0].parentElement.textContent);
-		console.log(`is checked.`);
-		console.log("-----------------------------------");
-		*/
-		
-		
-		/* console.log(`From DOM, input`);
-		console.log($("input[type='checkbox']")[key]);
-		console.log(`with an index of ${key}, and with the text`);
-		console.log($("input[type='checkbox']")[key].parentElement.textContent);
-		console.log(`is checked.`);
-		 */
-		 
-		
-		
-		//console.log(value.input);
-		
-		
-		/*  if($(value.input).is(':checked')){
-		//if(this.checked){
-			console.log("From array of objects, input");
-			console.log(activities[key].input[0])
-			console.log(`with an index of ${key}, and with the text`);
-			console.log(activities[key].input[0].parentElement.textContent);
-			console.log(`is checked.`);
-			console.log("-----------------------------------");
-			console.log(`From DOM, input`);
-			console.log($("input[type='checkbox']")[key]);
-			console.log(`with an index of ${key}, and with the text`);
-			console.log($("input[type='checkbox']")[key].parentElement.textContent);
-			console.log(`is checked.`); 
-				 */
-				/* console.log(`From DOM, input`);
-				console.log($("input").attr('name'));
-				//console.log(`with an index of ${key}, and with the text`);
-				//console.log($("input[type='checkbox']")[key].parentElement.textContent);
-				console.log(`is checked.`);  */
-		
-				
-				//alert(" isChecked!");	
-		//}
-		/* if( ($(activities).eq(1) ).is(':checked')){
-				alert("1 isChecked eq1!");
-		}  */
-		
-		/* if ($(value.input).is(':checked') ) {//if an input is checked and the day and time of another input does not conflict leave it checked and disable others with same day and time
-			
-			if ( ( this.value.day && this.value.time)  != ( ( $(value.day).is(':checked') ) && ( $(value.time).is(':checked')) ) ){
-						alert("1 isChecked conditional!");
-				
-			}
-			
-		} */
-		
-		
-		
-		
-//	});
-		
-	
-		
-		/* for(var i = 0; i < activities.length; i++){
-			if (activities[i].time === "1300-1600") {
-				alert("time is 1300 - 1600");
-			}
-			
-		} */
-		
-		/* $.each(activities) {
-		//console.log(value.title + value.day + value.time + value.cost);
-		if(activities.input ===  $("input[name='build-tools']") ) ){
-			alert("input baby");
-		}
-	}
-	 */
-
-
-
-
-		/* if(activities[1].day === "Tuesday"){
-			alert("Tuesday baby!");
-			}
-			 if(activities[1].input === $("input[name='js-frameworks']")){
-				alert("Input!");
-			}
-			console.log(activities[1].title);
-			console.log(activities[1].input);*/
-
-		//}); 
 });
