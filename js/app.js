@@ -104,8 +104,6 @@ $(document).ready(function (){
 				}
 			}
 			
-
-			
 			var activityDay = getActivityDay(checkboxText);
 			console.log("This is the retun of the activity day");
 			console.log(activityDay);
@@ -154,20 +152,20 @@ $(document).ready(function (){
 						
 			let getActivityDays = function(checkboxTextCheck){
 					
-			let daysOfWeek = ["Sunday","Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-					
-			for (let i = 0; i < daysOfWeek.length; i++){
+				let daysOfWeek = ["Sunday","Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 						
-				console.log (checkboxTextCheck);
-						
-					//	console.log(daysOfWeek[i]);
-						
-				if(checkboxTextCheck.includes(daysOfWeek[i])){
-				console.log("The day of week for this activity is");
-				console.log(daysOfWeek[i]);
-				let dayOfWeekReturn = daysOfWeek[i];
-				return dayOfWeekReturn;	
-			}
+				for (let i = 0; i < daysOfWeek.length; i++){
+							
+					console.log (checkboxTextCheck);
+							
+						//	console.log(daysOfWeek[i]);
+							
+					if(checkboxTextCheck.includes(daysOfWeek[i])){
+					console.log("The day of week for this activity is");
+					console.log(daysOfWeek[i]);
+					let dayOfWeekReturn = daysOfWeek[i];
+					return dayOfWeekReturn;	
+				}
 					
 		}
 	}
@@ -189,10 +187,33 @@ $(document).ready(function (){
 					}
 					
 					
-					if (specificEventTime != null ) {
+					if (specificEventTime != null) {
+						
 					
-						if($(this).is(":checked") && JSON.stringify(activityTime)===JSON.stringify(specificEventTime)){
-							alert("times are equal!");
+						 if( (activityDay && JSON.stringify(activityTime) ) === (activityDays && (JSON.stringify(specificEventTime) )  ) ){
+							 console.log("inside the day/time conditional");
+							 console.log(activityDay + " " + " " + JSON.stringify(activityTime) + " is equal to " + activityDays + " " + " " +(JSON.stringify(specificEventTime)) ); 
+							 
+							console.log("this is the value");
+							console.log(value);
+							//alert("match");
+							if (!$(this).is(":checked")){
+								$(value).attr("disabled", true);
+							}
+						} 
+						
+						/* if ($(this).is(":checked") && activityDay === activityDays){
+							//activityDays.value.attr("disabled", true);
+							
+							console.log("index and value");
+							console.log(index, value);
+							console.log("activityDays Value is");
+							console.log(activityDays.value);
+						}
+					 */
+						if($(this).is(":checked") && JSON.stringify(activityTime) === JSON.stringify(specificEventTime)){
+							
+							//alert("times are equal!");
 							console.log("These Event Times are equal");
 							console.log(JSON.stringify(activityTime) + "is equal to" + JSON.stringify(specificEventTime) );
 						//	$(specificEventTime.child().input.attr('disabled', "") );
