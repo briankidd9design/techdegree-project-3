@@ -183,25 +183,48 @@ $(document).ready(function (){
 					console.log(specificEventTime);
 					
 					if ( $(this).is(":checked") && checkboxTextCheck === checkboxText){
-						console.log(checkboxText + "is euqal to " + checkboxText);
+						console.log("checkboxText is equql to checkboxTextCheck")
+						
+						console.log(checkboxText + "is equal to " + checkboxTextCheck);
 					}
 					
 					
-					if (specificEventTime != null) {
-						
 					
-						 if( (activityDay && JSON.stringify(activityTime) ) === (activityDays && (JSON.stringify(specificEventTime) )  ) ){
+					
+					//if($(this).is(":checked")){
+					if ( specificEventTime != null){
+						if($(this).is(":checked") ){
+						 if ( activityDay === activityDays &&  JSON.stringify(activityTime) === JSON.stringify(specificEventTime) ){
+							
 							 console.log("inside the day/time conditional");
 							 console.log(activityDay + " " + " " + JSON.stringify(activityTime) + " is equal to " + activityDays + " " + " " +(JSON.stringify(specificEventTime)) ); 
 							 
 							console.log("this is the value");
 							console.log(value);
 							//alert("match");
-							if (!$(this).is(":checked")){
+							//if (!$(this).is(":checked")){
+							//if !($(this).is(":checked") ){
+								
 								$(value).attr("disabled", true);
-							}
-						} 
+								/* if ( !(checkboxTextCheck === checkboxText) ){				
+										//$(value).attr("disabled", true);
+										$(value).prop("disabled", true);
+								} else {
+									// $(value).attr("disabled",false);
+									$(value).prop("disabled", false);
+								}  */
 						
+									
+								}
+							}
+				
+						}
+							
+						
+						
+						
+						
+							//}
 						/* if ($(this).is(":checked") && activityDay === activityDays){
 							//activityDays.value.attr("disabled", true);
 							
@@ -211,18 +234,16 @@ $(document).ready(function (){
 							console.log(activityDays.value);
 						}
 					 */
-						if($(this).is(":checked") && JSON.stringify(activityTime) === JSON.stringify(specificEventTime)){
+					
+					 
+						/* if($(this).is(":checked") && JSON.stringify(activityTime) === JSON.stringify(specificEventTime)){
 							
 							//alert("times are equal!");
 							console.log("These Event Times are equal");
-							console.log(JSON.stringify(activityTime) + "is equal to" + JSON.stringify(specificEventTime) );
+							console.log(JSON.stringify(activityTime) + "is equal to" + JSON.stringify(specificEventTime) ); */
 						//	$(specificEventTime.child().input.attr('disabled', "") );
 							//$(spcificEvent )
-							
-						}
-					}
-				
-				
+					
 				});
 				
 					
@@ -234,6 +255,8 @@ $(document).ready(function (){
 	var jsLibraries = $("input[name='js-libs']");
 	var express = $("input[name='express']");
 	var nodeJS = $("input[name='node']");
+	
+	
 
 	//var disabled = $('<style> .activities label{color: grey; text-decoration: line-through</style>'});
 	//let disabled = $('<style>.disabled{color:grey;}</style>');
