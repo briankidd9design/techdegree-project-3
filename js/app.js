@@ -4,6 +4,7 @@ FSJS project 3 - Interactive Form
 ******************************************/
 //alert("Hello");
 $(document).ready(function() {
+	$('input[type=checkbox]').prop('checked', false);//This code is for IE11 because refreshing withought it will not clear checkboxes
 	//focus on Name field
 	$("#name").focus();
 	//Job Role Section
@@ -60,14 +61,13 @@ $(document).ready(function() {
 	//var totalCost = 0;	
 	var totalCost = 0; //this is in the global scope. Is there a way to make it work in the function below?
 	$(".activities input[type=checkbox]").on('change', function(e) {
-		let inputLength = $('input[type="checkbox"]:checked').length;
 		let checkboxText = ($(e.target).parent().text());
 		/*Activity Day*/
 		/*This function takes in the whole description of the activity and finds the day of the week*/
 		let getActivityDay = function(checkboxText) {
 			let daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 			for (let i = 0; i < daysOfWeek.length; i++) {
-				if (checkboxText.includes(daysOfWeek[i])) {
+				if (checkboxText.indexOf(daysOfWeek[i])>= 0) {//I originally used .includes but it is not supported by IE11
 					let dayOfWeekReturn = daysOfWeek[i];
 					return dayOfWeekReturn;
 				}
@@ -109,7 +109,7 @@ $(document).ready(function() {
 			let getActivityDays = function(checkboxTextCheck) {
 				let daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 				for (let i = 0; i < daysOfWeek.length; i++) {
-					if (checkboxTextCheck.includes(daysOfWeek[i])) {
+					if (checkboxTextCheck.indexOf(daysOfWeek[i]) >= 0) {//I originally used .includes but it is not supported by IE11
 						let dayOfWeekReturn = daysOfWeek[i];
 						return dayOfWeekReturn;
 					}
