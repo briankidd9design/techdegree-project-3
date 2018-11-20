@@ -18,11 +18,23 @@ $(document).ready(function (){
 			$("#otherTitle").hide();
 		}
 	});
+	
+	
+/*hide colors label and t-shirt select menu until t-shirt disign is chosen*/
+$("#colors-js-puns").hide();
+  $("#design").on("change", function(){
+	if ( $(this).val() === "js puns" || $(this).val() === "heart js" ) {
+		
+		$("#colors-js-puns").show();
+	}else{
+		$("#colors-js-puns").hide();
+	}
+	
+});
 
 //T-Shirt Info Section
 	function hideOption(number) {
 		$('#colors-js-puns select option').eq(number).hide();
-		
 		
 	}
 
@@ -31,10 +43,8 @@ $(document).ready(function (){
 	
 	}
 		
-	
 	$("#design").change(function(){
 
-	
 		 if( $("#design option:selected").val() === "js puns"   ){ 
 			
 			$('#colors-js-puns select option')[0].selected = true;
@@ -74,6 +84,9 @@ $(document).ready(function (){
 	//var totalCost = 0;	
 	var totalCost = 0;//this is in the global scope. Is there a way to make it work in the function below?
 	 $(".activities input[type=checkbox]").on('change', function(e){ 
+				
+		
+				
 				
 			let inputLength = $('input[type="checkbox"]:checked').length;
 			console.log("input Length is");
@@ -140,6 +153,7 @@ $(document).ready(function (){
 					updateCost(-activityCost)
 				}
 		/*looping over the acitivites */
+		
 		$(".activities input[type=checkbox]").each(function(index, value) {
 				
 	
@@ -191,62 +205,20 @@ $(document).ready(function (){
 					
 					
 					
-					//if($(this).is(":checked")){
-					if ( specificEventTime != null){
-						if($(this).is(":checked") ){
+				//	if($(this).is(":checked")){
+					if (  specificEventTime != null && !(checkboxTextCheck === checkboxText)){
+						
 						 if ( activityDay === activityDays &&  JSON.stringify(activityTime) === JSON.stringify(specificEventTime) ){
-							
-							 console.log("inside the day/time conditional");
-							 console.log(activityDay + " " + " " + JSON.stringify(activityTime) + " is equal to " + activityDays + " " + " " +(JSON.stringify(specificEventTime)) ); 
-							 
-							console.log("this is the value");
-							console.log(value);
-							//alert("match");
-							//if (!$(this).is(":checked")){
-							//if !($(this).is(":checked") ){
-								
+							if ($(this).is(":checked")){
+					
 								$(value).attr("disabled", true);
-								/* if ( !(checkboxTextCheck === checkboxText) ){				
-										//$(value).attr("disabled", true);
-										$(value).prop("disabled", true);
-								} else {
-									// $(value).attr("disabled",false);
-									$(value).prop("disabled", false);
-								}  */
-						
-									
-								}
-							}
-				
+								
+							 } else{
+								$(value).attr("disabled", false);
+							} 
 						}
-							
-						
-						
-						
-						
-							//}
-						/* if ($(this).is(":checked") && activityDay === activityDays){
-							//activityDays.value.attr("disabled", true);
-							
-							console.log("index and value");
-							console.log(index, value);
-							console.log("activityDays Value is");
-							console.log(activityDays.value);
-						}
-					 */
-					
-					 
-						/* if($(this).is(":checked") && JSON.stringify(activityTime) === JSON.stringify(specificEventTime)){
-							
-							//alert("times are equal!");
-							console.log("These Event Times are equal");
-							console.log(JSON.stringify(activityTime) + "is equal to" + JSON.stringify(specificEventTime) ); */
-						//	$(specificEventTime.child().input.attr('disabled', "") );
-							//$(spcificEvent )
-					
+					}
 				});
-				
-					
 	 });
 	
 	//let  totalCost = 0;
@@ -345,6 +317,46 @@ $(document).ready(function (){
 		}
 	});
  */
+/*Payment Info section*/
+/* this codes sets the default display to credit card*/	
+ let defaultPaymentDisplay = function () {
+	if($("#payment").val()==='select_method'){
+		$("#payment").children().eq(0).hide();
+		$("#payment").children().eq(1).attr("selected", true);
+		$("#credit-card").show();
+		$("#credit-card").next().hide();
+		$("#credit-card").next().next().hide();
+	}
+
+}
+/*invoking the desfualPayment Display method to show credit card as the default payment option */
+defaultPaymentDisplay(); 
+
+$("#payment").on("change", function(){
+	
+	if($(this).val()==='select_method'){
+		$("#credit-card").hide();
+		$("#credit-card").next().hide();
+		$("#credit-card").next().next().hide();
+	}
+	
+	else if($(this).val()==='credit card'){
+		$("#credit-card").show();
+		$("#credit-card").next().hide();
+		$("#credit-card").next().next().hide();
+	}
+	else if ($(this).val()==='paypal'){
+			$("#credit-card").hide();
+		$("#credit-card").next().show();
+		$("#credit-card").next().next().hide();
+	}
+	else if ($(this).val()==='bitcoin'){
+		$("#credit-card").hide();
+		$("#credit-card").next().hide();
+		$("#credit-card").next().next().show();
+	}
+	
+});
 
 	
 
