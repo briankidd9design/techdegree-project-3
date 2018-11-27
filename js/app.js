@@ -59,6 +59,7 @@ $(document).ready(function() {
 	//with conflicting time is checked. This way the code will work even if activities are added to the HTML form. 	
 	var totalCost = 0; //this is in the global scope. Is there a way to make it work in the function below?
 	$(".activities input[type=checkbox]").on('change', function(e) {
+		//get the label text of the checkbox checked
 		let checkboxText = ($(e.target).parent().text());
 		/*Activity Day*/
 		/*This function takes in the whole description of the activity and finds the day of the week*/
@@ -70,15 +71,17 @@ $(document).ready(function() {
 					return dayOfWeekReturn;
 				}
 			}
-		}
+		}//this is the day of the checkbox checked
 		var activityDay = getActivityDay(checkboxText);
 		/*Activity Time*/
+		//This regular expression checker helps find the time of the activity
 		let timeSearch = /\b((?:1[0-2]|[1-9])[ap]m)-((?:1[0-2]|[1-9])[ap]m)/g;
 		let activityTime = checkboxText.match(timeSearch);
 		/*Activity Cost*/
 		let dollarSign = (checkboxText.indexOf("$"));
 		let activityCost = parseInt(checkboxText.slice((dollarSign + 1), (dollarSign + 4)));
 		$('.activities').append('<div id="activitiesTotal"></div>');
+		//This function adds tht total cost to the activity cost
 		var updateCost = function(activityCost) {
 			totalCost += activityCost;
 			document.getElementById("activitiesTotal").innerHTML = "Total: $" + totalCost;
@@ -99,6 +102,7 @@ $(document).ready(function() {
 		}
 		let countCheckedBoxes = checkboxCheckedCounter(checkboxChecked);
 		/*********************************************************************/
+		//this function gets the day of week of all the actitivites 
 		$(".activities input[type=checkbox]").each(function(index, value) {
 			let checkboxTextCheck = $(value).parent().text();
 			let specificEventTime = checkboxTextCheck.match(timeSearch)
@@ -110,7 +114,7 @@ $(document).ready(function() {
 						return dayOfWeekReturn;
 					}
 				}
-			}
+			}//these conditionals check if the day and time of the checked activities conflict or not
 			let activityDays = getActivityDays(checkboxTextCheck);
 			if (checkboxCheckedCount === 1) {
 				if (specificEventTime != null && !(checkboxTextCheck === checkboxText)) {
@@ -138,7 +142,7 @@ $(document).ready(function() {
 			$("#credit-card").next().next().hide();
 		}
 	}
-	/*invoking the desfualPayment Display method to show credit card as the default payment option */
+	/*invoking the defualPayment Display method to show credit card as the default payment option */
 	defaultPaymentDisplay();
 	$("#payment").on("change", function() {
 		if ($(this).val() === 'select_method') {
@@ -175,18 +179,18 @@ $(document).ready(function() {
 			event.preventDefault();
 		}
 		if (!($(".activities input[type=checkbox]")).is(":checked")) {
-			$(".activities legend").before('<span class="formError">You must choose one acitivity</span>');
+			$(".activities legend").before('<span class="formError">You must choose one activity</span>');
 			event.preventDefault();
 		}
 		/*credit card validation*/
 		if (($("#payment option:selected").val() === "credit card")) {
-			console.log("creditCard");
 			let ccInput = $("#cc-num");
 			let ccLength = $("#cc-num").val().length;
 			let zipInput = $("#zip");
 			let zipLength = $("#zip").val().length;
 			let cvvInput = $("#cvv");
 			let cvvLength = $("#cvv").val().length;
+			
 			if (isNaN(ccInput.val()) || (isNaN(zipInput.val())) || (isNaN(cvvInput.val()))) {
 				$('#payment').after('<span class="formError">Numbers Only<span>');
 				event.preventDefault();
@@ -195,7 +199,7 @@ $(document).ready(function() {
 				$('#payment').after('<span class="formError">Missing CVV <span>');
 				event.preventDefault();
 			}
-			if (cvvLength > 0 && cvvLength < 3) {
+			if (cvvLength > 0 && cvvLength < 3 || cvvLength > 3) {
 				$('#payment').after('<span class="formError">Enter 3-digit CVV <span>');
 				event.preventDefault();
 			}
@@ -211,7 +215,7 @@ $(document).ready(function() {
 				$('#payment').after('<span class="formError">Missing CC Number <span>');
 				event.preventDefault();
 			}
-			if (ccLength > 0 && ccLength < 13) {
+			if (ccLength > 0 && ccLength < 13 || ccLength > 16) {
 				$('#payment').after('<span class="formError">Length of CC: 13-16 <span>');
 				event.preventDefault();
 			}
@@ -222,7 +226,7 @@ $(document).ready(function() {
 		$(".formError").remove();
 		validateEmail();
 	});
-
+	//This function is used to validate the email and is used in the above keyup function
 	function validateEmail() {
 		let $email = $('#mail').val();
 		let checkEmailRegExp = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
