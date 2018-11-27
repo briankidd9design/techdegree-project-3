@@ -107,6 +107,18 @@ input[type="radio"] {
 	color:rgba(115,115,115, 0.8 );
 	text-decoration: line-through;
 } 
+.error_show{
+	color: red;
+	margin-left: 10px;
+}
+input.invalid{
+	border: 2px solid red;
+}
+.formError{
+	color:red;
+}
+
+
 button {
 	color: #fff;
 	padding: .55em 1.25em;

@@ -57,8 +57,7 @@ $(document).ready(function() {
 	//My goals for the "Activities Section" is as follows
 	//1.loop through fieldset inputs with .activities class
 	//2. be able to compare the day and times of each activity as opposed to just disabling certain checkboxes when a specific checkbox
-	//with conflicting time is checked. This way the code will work even if activities are added to the form. 
-	//var totalCost = 0;	
+	//with conflicting time is checked. This way the code will work even if activities are added to the HTML form. 	
 	var totalCost = 0; //this is in the global scope. Is there a way to make it work in the function below?
 	$(".activities input[type=checkbox]").on('change', function(e) {
 		let checkboxText = ($(e.target).parent().text());
@@ -100,8 +99,6 @@ $(document).ready(function() {
 				}
 			}
 			let countCheckedBoxes = checkboxCheckedCounter(checkboxChecked);
-			console.log("checkboxChecked count");
-			console.log(checkboxCheckedCount);
 		/*********************************************************************/
 		$(".activities input[type=checkbox]").each(function(index, value) {
 			let checkboxTextCheck = $(value).parent().text();
@@ -130,8 +127,6 @@ $(document).ready(function() {
 		} else {
 			
 			if (activityDay === activityDays && JSON.stringify(activityTime) === JSON.stringify(specificEventTime)) {
-				console.log("activityDay and activityDays AND activityTime and sepcificEventTime");
-				console.log(activityDay + " " + activityDays + " " + JSON.stringify(activityTime) + " " + JSON.stringify(specificEventTime) );
 					$(value).attr("disabled", false);
 					$(value).parent().removeClass("disabled");
 			}
@@ -174,4 +169,57 @@ $(document).ready(function() {
 			$("#credit-card").next().next().show();
 		}
 	});
+	
+/*form validation*/
+ const $form = $('form');
+ $form.attr('id', 'form');
+ $("#form").submit(function(event) {
+ 			
+ 			let name = $('#name').val();
+ 			let email = $('#mail').val();
+ 			
+ 			$(".formError").remove();
+ 			if (name.length < 1) {
+ 				$('#name').before('<span class="formError">Name is Required</span>');
+ 				event.preventDefault();
+ 			}
+ 			if (email.length < 1) {
+ 				$('#mail').before('<span class="formError">email is required</span>');
+ 				event.preventDefault();
+ 			} 
+			if(!($(".activities input[type=checkbox]")).is(":checked") ){
+			
+				$(".activities legend").before('<span class="formError">You must choose one acitivity</span>');
+				event.preventDefault();
+			}
+				
+			
+  });
+	
+	/*on keyup email validation*/
+	$("#mail").on('change keyup', function(){
+		$(".formError").remove();
+
+		validateEmail();
+
+	});
+	
+	function validateEmail(){
+				let $email = $('#mail').val();
+ 				let checkEmailRegExp = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+ 				let validEmail = $email.match(checkEmailRegExp);
+ 				if (!validEmail){
+ 					$('#mail').before('<span class="formError">Enter a valid email: example (jon.doe@gmail.com)</span>');
+ 					event.preventDefault();
+	
+				} 
+	}
+
+	
+	
+	if (($("#payment option:selected").val()  === "credit card" )){
+		console.log("creditCard");
+	}
+	
+	
 });
