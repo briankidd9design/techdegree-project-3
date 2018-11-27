@@ -2,9 +2,8 @@
 Treehouse Techdegree:
 FSJS project 3 - Interactive Form
 ******************************************/
-//alert("Hello");
 $(document).ready(function() {
-	$('input[type=checkbox]').prop('checked', false);//This code is for IE11 because refreshing withought it will not clear checkboxes
+	$('input[type=checkbox]').prop('checked', false); //This code is for IE11 because refreshing withought it will not clear checkboxes
 	//focus on Name field
 	$("#name").focus();
 	//Job Role Section
@@ -66,7 +65,7 @@ $(document).ready(function() {
 		let getActivityDay = function(checkboxText) {
 			let daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 			for (let i = 0; i < daysOfWeek.length; i++) {
-				if (checkboxText.indexOf(daysOfWeek[i])>= 0) {//I originally used .includes but it is not supported by IE11
+				if (checkboxText.indexOf(daysOfWeek[i]) >= 0) { //I originally used .includes but it is not supported by IE11
 					let dayOfWeekReturn = daysOfWeek[i];
 					return dayOfWeekReturn;
 				}
@@ -91,14 +90,14 @@ $(document).ready(function() {
 		}
 		/*looping over the acitivites */
 		/*this section is used to count the number of checkboxes checked*/
-			let checkboxCheckedCount = 0;
-			let checkboxChecked = ($(this).is(":checked") );
-			let checkboxCheckedCounter = function (checkboxChecked){
-				if(checkboxChecked ){
-					checkboxCheckedCount++;
-				}
+		let checkboxCheckedCount = 0;
+		let checkboxChecked = ($(this).is(":checked"));
+		let checkboxCheckedCounter = function(checkboxChecked) {
+			if (checkboxChecked) {
+				checkboxCheckedCount++;
 			}
-			let countCheckedBoxes = checkboxCheckedCounter(checkboxChecked);
+		}
+		let countCheckedBoxes = checkboxCheckedCounter(checkboxChecked);
 		/*********************************************************************/
 		$(".activities input[type=checkbox]").each(function(index, value) {
 			let checkboxTextCheck = $(value).parent().text();
@@ -106,37 +105,28 @@ $(document).ready(function() {
 			let getActivityDays = function(checkboxTextCheck) {
 				let daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 				for (let i = 0; i < daysOfWeek.length; i++) {
-					if (checkboxTextCheck.indexOf(daysOfWeek[i]) >= 0) {//I originally used .includes but it is not supported by IE11
+					if (checkboxTextCheck.indexOf(daysOfWeek[i]) >= 0) { //I originally used .includes but it is not supported by IE11
 						let dayOfWeekReturn = daysOfWeek[i];
 						return dayOfWeekReturn;
 					}
 				}
 			}
 			let activityDays = getActivityDays(checkboxTextCheck);
-		
-
-		if (checkboxCheckedCount === 1) {
-			if (specificEventTime != null && !(checkboxTextCheck === checkboxText)) {
-				if (activityDay === activityDays && JSON.stringify(activityTime) === JSON.stringify(specificEventTime)) {
-					$(value).attr("disabled", true);
-					$(value).parent().addClass("disabled");
-				
+			if (checkboxCheckedCount === 1) {
+				if (specificEventTime != null && !(checkboxTextCheck === checkboxText)) {
+					if (activityDay === activityDays && JSON.stringify(activityTime) === JSON.stringify(specificEventTime)) {
+						$(value).attr("disabled", true);
+						$(value).parent().addClass("disabled");
+					}
 				}
-			}
-			
-		} else {
-			
-			if (activityDay === activityDays && JSON.stringify(activityTime) === JSON.stringify(specificEventTime)) {
+			} else {
+				if (activityDay === activityDays && JSON.stringify(activityTime) === JSON.stringify(specificEventTime)) {
 					$(value).attr("disabled", false);
 					$(value).parent().removeClass("disabled");
+				}
 			}
-		
-		}
-		
-		
 		});
 	});
-	
 	/*Payment Info section*/
 	/* this codes sets the default display to credit card*/
 	let defaultPaymentDisplay = function() {
@@ -169,57 +159,78 @@ $(document).ready(function() {
 			$("#credit-card").next().next().show();
 		}
 	});
-	
-/*form validation*/
- const $form = $('form');
- $form.attr('id', 'form');
- $("#form").submit(function(event) {
- 			
- 			let name = $('#name').val();
- 			let email = $('#mail').val();
- 			
- 			$(".formError").remove();
- 			if (name.length < 1) {
- 				$('#name').before('<span class="formError">Name is Required</span>');
- 				event.preventDefault();
- 			}
- 			if (email.length < 1) {
- 				$('#mail').before('<span class="formError">email is required</span>');
- 				event.preventDefault();
- 			} 
-			if(!($(".activities input[type=checkbox]")).is(":checked") ){
-			
-				$(".activities legend").before('<span class="formError">You must choose one acitivity</span>');
+	/*form validation*/
+	const $form = $('form');
+	$form.attr('id', 'form');
+	$("#form").submit(function(event) {
+		let name = $('#name').val();
+		let email = $('#mail').val();
+		$(".formError").remove();
+		if (name.length < 1) {
+			$('#name').before('<span class="formError">Name is Required</span>');
+			event.preventDefault();
+		}
+		if (email.length < 1) {
+			$('#mail').before('<span class="formError">email is required</span>');
+			event.preventDefault();
+		}
+		if (!($(".activities input[type=checkbox]")).is(":checked")) {
+			$(".activities legend").before('<span class="formError">You must choose one acitivity</span>');
+			event.preventDefault();
+		}
+		/*credit card validation*/
+		if (($("#payment option:selected").val() === "credit card")) {
+			console.log("creditCard");
+			let ccInput = $("#cc-num");
+			let ccLength = $("#cc-num").val().length;
+			let zipInput = $("#zip");
+			let zipLength = $("#zip").val().length;
+			let cvvInput = $("#cvv");
+			let cvvLength = $("#cvv").val().length;
+			if (isNaN(ccInput.val()) || (isNaN(zipInput.val())) || (isNaN(cvvInput.val()))) {
+				$('#payment').after('<span class="formError">Numbers Only<span>');
 				event.preventDefault();
 			}
-				
-			
-  });
-	
-	/*on keyup email validation*/
-	$("#mail").on('change keyup', function(){
-		$(".formError").remove();
-
-		validateEmail();
-
+			if ($(cvvInput).val() === "") {
+				$('#payment').after('<span class="formError">Missing CVV <span>');
+				event.preventDefault();
+			}
+			if (cvvLength > 0 && cvvLength < 3) {
+				$('#payment').after('<span class="formError">Enter 3-digit CVV <span>');
+				event.preventDefault();
+			}
+			if ($(zipInput).val() === "") {
+				$('#payment').after('<span class="formError">Missing Zip <span>');
+				event.preventDefault();
+			}
+			if (zipLength > 0 && zipLength < 5) {
+				$('#payment').after('<span class="formError">Enter 5-digit zip <span>');
+				event.preventDefault();
+			}
+			if ($(ccInput).val() === "") {
+				$('#payment').after('<span class="formError">Missing CC Number <span>');
+				event.preventDefault();
+			}
+			if (ccLength > 0 && ccLength < 13) {
+				$('#payment').after('<span class="formError">Length of CC: 13-16 <span>');
+				event.preventDefault();
+			}
+		}
 	});
-	
-	function validateEmail(){
-				let $email = $('#mail').val();
- 				let checkEmailRegExp = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
- 				let validEmail = $email.match(checkEmailRegExp);
- 				if (!validEmail){
- 					$('#mail').before('<span class="formError">Enter a valid email: example (jon.doe@gmail.com)</span>');
- 					event.preventDefault();
-	
-				} 
+	/*on keyup email validation*/
+	$("#mail").on('change keyup', function() {
+		$(".formError").remove();
+		validateEmail();
+	});
+
+	function validateEmail() {
+		let $email = $('#mail').val();
+		let checkEmailRegExp = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+		let validEmail = $email.match(checkEmailRegExp);
+		if (!validEmail) {
+			$('#mail').before('<span class="formError">Enter a valid email: example (jon.doe@gmail.com)</span>');
+			event.preventDefault();
+		}
 	}
 
-	
-	
-	if (($("#payment option:selected").val()  === "credit card" )){
-		console.log("creditCard");
-	}
-	
-	
 });
